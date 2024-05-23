@@ -2,6 +2,9 @@ package tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -9,26 +12,25 @@ import util.misArrays;
 
 class testMedianaNotas {
 
-	static int[] notasValidas;
-	static int[] notasNoValidas;
-	
-	@BeforeAll
-	public static void inicializarDatos() {
-        notasValidas = new int[]{1, 2, 3, 4, 5};
-        notasNoValidas = new int[]{-1, 14, -4, -7, 24};
-    }
-	
-	@Test
-	void testMedianaNotasValoresValidos() {
-		
-        float mediano = misArrays.medianaNotas(notasValidas);
+	private static ArrayList<Float> notasValidas;
+    private static ArrayList<Float> notasInvalidas;
 
-        assertEquals(3, mediano);
+    @BeforeAll
+    static void setUp() {
+        notasValidas = new ArrayList<>(Arrays.asList(5.0f, 7.5f, 8.0f));
+        notasInvalidas = new ArrayList<>(Arrays.asList(-5.0f, 12.0f, 20.0f));
     }
-	
-	@Test
-	void testMedianaNotaValoresValidos() {
-        assertThrows(IllegalArgumentException.class, () -> misArrays.medianaNotas(notasNoValidas));
+
+    @Test
+    void testMedianaNotasValidas() {
+        assertEquals(7.5f, misArrays.medianaNotas(notasValidas));
+    }
+
+    @Test
+    void testMedianaNotasInvalidas() {
+        assertThrows(IllegalArgumentException.class, () -> {
+            misArrays.medianaNotas(notasInvalidas);
+        });
     }
 
 }
