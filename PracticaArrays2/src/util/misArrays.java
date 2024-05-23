@@ -1,93 +1,78 @@
 package util;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 
 public abstract class misArrays {
 	/**
-	 * Calcula la media de las notas de una array
-	 * 
-	 * @param notas
-	 * @return La media de las notas
-	 * @throws IllegalArgumentException, si las notas no estan entre 0 y 10
-	 */
-	public static float mediaNotas(int[] notas) {
-		int suma = 0;
-		for (int i = 0; i < notas.length; i++) {
-			if (notas[i] < 0 || notas[i] > 10) {
-				throw new IllegalArgumentException("Las notas tienen que estar entre 0 y 10");
-			}
-			suma += notas[i];
-		}
+     * Calcula la media de una lista de notas.
+     * 
+     * @param notas ArrayList de números con decimales entre 0 y 10.
+     * @return La media de las notas.
+     * @throws IllegalArgumentException Si alguna nota no está entre 0 y 10.
+     */
+    public static float mediaNotas(ArrayList<Float> notas) {
+        verificarNotas(notas);
+        float suma = 0;
+        for (float nota : notas) {
+            suma += nota;
+        }
+        return suma / notas.size();
+    }
 
-		return (float) suma / notas.length;
-	}
+    /**
+     * Calcula la mediana de una lista de notas.
+     * 
+     * @param notas ArrayList de números con decimales entre 0 y 10.
+     * @return La mediana de las notas.
+     * @throws IllegalArgumentException Si alguna nota no está entre 0 y 10.
+     */
+    public static float medianaNotas(ArrayList<Float> notas) {
+        verificarNotas(notas);
+        Collections.sort(notas);
+        int n = notas.size();
+        if (n % 2 == 0) {
+            return (notas.get(n / 2 - 1) + notas.get(n / 2)) / 2.0f;
+        } else {
+            return notas.get(n / 2);
+        }
+    }
 
-	/**
-	 * Calcula la nota más alta de una array
-	 * 
-	 * @param notas
-	 * @return la nota mas alta
-	 * @throws IllegalArgumentException, si las notas no estan entre 0 y 10
-	 */
-	public static int maximaNota(int[] notas) {
-		int maximaNota = notas[0];
+    /**
+     * Obtiene la nota máxima de una lista de notas.
+     * 
+     * @param notas ArrayList de números con decimales entre 0 y 10.
+     * @return La nota máxima.
+     * @throws IllegalArgumentException Si alguna nota no está entre 0 y 10.
+     */
+    public static float maximaNota(ArrayList<Float> notas) {
+        verificarNotas(notas);
+        return Collections.max(notas);
+    }
 
-		for (int i = 0; i < notas.length; i++) {
-			if (notas[i] < 0 || notas[i] > 10) {
-				throw new IllegalArgumentException("Las notas tienen que estar entre 0 y 10");
-			} else if (notas[i] > maximaNota) {
-				maximaNota = notas[i];
-			}
+    /**
+     * Obtiene la nota mínima de una lista de notas.
+     * 
+     * @param notas ArrayList de números con decimales entre 0 y 10.
+     * @return La nota mínima.
+     * @throws IllegalArgumentException Si alguna nota no está entre 0 y 10.
+     */
+    public static float minimaNota(ArrayList<Float> notas) {
+        verificarNotas(notas);
+        return Collections.min(notas);
+    }
 
-		}
-
-		return maximaNota;
-	}
-
-	/**
-	 * Calcula la nota mas baja de una arrau
-	 * 
-	 * @param notas
-	 * @return la nota mas baja
-	 * @throws IllegalArgumentException, si las notas no estan entre 0 y 10
-	 */
-	public static int minimaNota(int[] notas) {
-		int minimaNota = notas[0];
-
-		for (int i = 0; i < notas.length; i++) {
-			if (notas[i] < 0 || notas[i] > 10) {
-				throw new IllegalArgumentException("Las notas tienen que estar entre 0 y 10");
-			} else if (notas[i] < minimaNota) {
-				minimaNota = notas[i];
-			}
-
-		}
-
-		return minimaNota;
-	}
-	
-	/**
-	 * Calcula la mediana de las notas de una array
-	 * @param notas
-	 * @return la mediana de las notas
-	 * @throws IllegalArgumentException, si las notas no estan entre 0 y 10
-	 */
-	public static float medianaNotas(int[] notas) {
-
-		for (int i = 0; i < notas.length; i++) {
-			if (notas[i] < 0 || notas[i] > 10) {
-				throw new IllegalArgumentException("Las notas deben estar entre 0 y 10");
-			}
-		}
-
-		Arrays.sort(notas);
-		int[] arrayOrdenado = notas;
-		int mitad = arrayOrdenado.length / 2;
-
-		if (arrayOrdenado.length % 2 == 0) {
-			return (float) (arrayOrdenado[mitad - 1] + arrayOrdenado[mitad]) / 2;
-		} else {
-			return arrayOrdenado[mitad];
-		}
-	}
+    /**
+     * Verifica que todas las notas están entre 0 y 10.
+     * 
+     * @param notas Lista de notas a verificar.
+     * @throws IllegalArgumentException Si alguna nota no está entre 0 y 10.
+     */
+    private static void verificarNotas(ArrayList<Float> notas) {
+        for (float nota : notas) {
+            if (nota < 0 || nota > 10) {
+                throw new IllegalArgumentException("Todas las notas deben estar entre 0 y 10.");
+            }
+        }
+    }
 }
